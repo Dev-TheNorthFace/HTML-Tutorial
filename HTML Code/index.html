@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coin-Coin-Coin</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">NORTH</div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="#accueil">Accueil</a>
+        <a href="#profil">Profil</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#produits">Produits</a>
+        <a href="#todo">To-do</a>
+        <a href="#calculatrice">Calculatrice</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <div class="burger" onclick="toggleMenu()">☰</div>
+</nav>
+
+<section class="hero" id="accueil">
+    <h1>Bienvenue</h1>
+</section>
+
+<section class="slider">
+    <div class="slides" id="slides">
+        <img src="https://picsum.photos/900/350?1">
+        <img src="https://picsum.photos/900/350?2">
+        <img src="https://picsum.photos/900/350?3">
+    </div>
+</section>
+
+<section class="profile" id="profil">
+    <img src="https://picsum.photos/200">
+    <h2>North</h2>
+</section>
+
+<section class="gallery" id="galerie">
+    <img src="https://picsum.photos/300?1">
+    <img src="https://picsum.photos/300?2">
+    <img src="https://picsum.photos/300?3">
+</section>
+
+<section class="products" id="produits">
+    <div class="product">
+        <h3>Produit</h3>
+        <p>20$</p>
+    </div>
+</section>
+
+<section id="todo">
+    <input id="taskInput">
+    <button onclick="addTask()">Ajouter</button>
+    <ul id="taskList"></ul>
+</section>
+
+<section id="calculatrice">
+    <input id="calcDisplay" readonly>
+    <button onclick="appendCalc('1')">1</button>
+    <button onclick="calculateResult()">=</button>
+</section>
+
+<section id="contact">
+    <form id="contactForm">
+        <input id="name">
+        <input id="email">
+        <textarea id="message"></textarea>
+        <button type="submit">Envoyer</button>
+    </form>
+</section>
+
+<footer>
+    <p>© 2026 NORTH</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

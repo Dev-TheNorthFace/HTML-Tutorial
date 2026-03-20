@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site d'apprentisage de code</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #0f0f0f;
+    color: white;
+    transition: 0.3s;
+}
+
+body.light-mode {
+    background: #f5f5f5;
+    color: #111;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #111;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.light-mode nav {
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    color: #00ffcc;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.burger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #00ffcc;
+}
+
+.theme-toggle {
+    background: #00ffcc;
+    color: #111;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.hero {
+    text-align: center;
+    padding: 80px 20px 50px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    color: #00ffcc;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+}
+
+.slider {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto 50px;
+    overflow: hidden;
+    border-radius: 14px;
+    position: relative;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slides img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.profile {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.profile img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.profile a {
+    display: inline-block;
+    margin: 8px;
+    color: #00ffcc;
+    text-decoration: none;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 30px;
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 12px;
+    height: 180px;
+    object-fit: cover;
+}
+
+.products {
+    padding: 40px 30px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 12px;
+    width: 220px;
+    transition: 0.3s;
+}
+
+body.light-mode .product,
+body.light-mode .todo,
+body.light-mode .calculator,
+body.light-mode .contact form {
+    background: #ffffff;
+    color: #111;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.product img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product h3 {
+    margin: 12px 0 8px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 28px;
+    color: #00ffcc;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.todo-section,
+.calculator-section,
+.contact {
+    padding: 40px 20px;
+}
+
+.todo {
+    max-width: 500px;
+    margin: auto;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.todo-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.todo input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+}
+
+.todo button {
+    padding: 10px 15px;
+    border: none;
+    background: #00ffcc;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+#taskList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.06);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    list-style: none;
+}
+
+body.light-mode #taskList li {
+    background: #f0f0f0;
+}
+
+.delete-btn {
+    background: crimson;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calculator {
+    max-width: 320px;
+    margin: auto;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+#calcDisplay {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 22px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calc-buttons button {
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #00ffcc;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #111;
+}
+
+.contact form {
+    max-width: 600px;
+    margin: auto;
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.contact input,
+.contact textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 6px;
+}
+
+.contact button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: #00ffcc;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.success {
+    color: #00ffcc;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+footer {
+    background: #111;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+body.light-mode footer {
+    background: #ffffff;
+    border-top: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+    .burger {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        right: 20px;
+        background: #111;
+        padding: 15px;
+        border-radius: 10px;
+        width: 220px;
+    }
+
+    body.light-mode .nav-links {
+        background: #ffffff;
+        border: 1px solid #ddd;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .slides img {
+        height: 220px;
+    }
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">NORTH</div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="#accueil">Accueil</a>
+        <a href="#profil">Profil</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#produits">Produits</a>
+        <a href="#todo">To-do</a>
+        <a href="#calculatrice">Calculatrice</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Mode</button>
+    <div class="burger" onclick="toggleMenu()">☰</div>
+</nav>
+
+<section class="hero" id="accueil">
+    <h1>Bienvenue le site d'apprentisage</h1>
+    <p>Landing page simple, propre et interactive</p>
+</section>
+
+<section class="slider">
+    <div class="slides" id="slides">
+        <img src="https://picsum.photos/900/350?random=1" alt="slide 1">
+        <img src="https://picsum.photos/900/350?random=2" alt="slide 2">
+        <img src="https://picsum.photos/900/350?random=3" alt="slide 3">
+    </div>
+</section>
+
+<section class="profile" id="profil">
+    <img src="https://picsum.photos/200" alt="profil">
+    <h2>North</h2>
+    <p>Développeur a temps perdu qui post des projets sur github.</p>
+    <div>
+        <a href="#">GitHub</a>
+        <a href="#">Discord</a>
+        <a href="#">Portfolio</a>
+    </div>
+</section>
+
+<h2 class="section-title" id="galerie">Galerie d’images</h2>
+<section class="gallery">
+    <img src="https://picsum.photos/300/300?random=4" alt="">
+    <img src="https://picsum.photos/300/300?random=5" alt="">
+    <img src="https://picsum.photos/300/300?random=6" alt="">
+    <img src="https://picsum.photos/300/300?random=7" alt="">
+    <img src="https://picsum.photos/300/300?random=8" alt="">
+    <img src="https://picsum.photos/300/300?random=9" alt="">
+</section>
+
+<h2 class="section-title" id="produits">Produits</h2>
+<section class="products">
+    <div class="product">
+        <img src="https://picsum.photos/250/180?random=10" alt="">
+        <h3>Produit 1</h3>
+        <p>Produit moderne avec style boutique.</p>
+        <strong>19.99$</strong>
+    </div>
+    <div class="product">
+        <img src="https://picsum.photos/250/180?random=11" alt="">
+        <h3>Produit 2</h3>
+        <p>Produit simple et élégant.</p>
+        <strong>29.99$</strong>
+    </div>
+    <div class="product">
+        <img src="https://picsum.photos/250/180?random=12" alt="">
+        <h3>Produit 3</h3>
+        <p>Parfait pour un exemple de boutique.</p>
+        <strong>39.99$</strong>
+    </div>
+</section>
+
+<h2 class="section-title" id="todo">To-do list</h2>
+<section class="todo-section">
+    <div class="todo">
+        <div class="todo-input">
+            <input type="text" id="taskInput" placeholder="Ajouter une tâche">
+            <button onclick="addTask()">Ajouter</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+</section>
+
+<h2 class="section-title" id="calculatrice">Calculatrice simple</h2>
+<section class="calculator-section">
+    <div class="calculator">
+        <input type="text" id="calcDisplay" readonly>
+        <div class="calc-buttons">
+            <button onclick="appendCalc('7')">7</button>
+            <button onclick="appendCalc('8')">8</button>
+            <button onclick="appendCalc('9')">9</button>
+            <button onclick="appendCalc('/')">÷</button>
+
+            <button onclick="appendCalc('4')">4</button>
+            <button onclick="appendCalc('5')">5</button>
+            <button onclick="appendCalc('6')">6</button>
+            <button onclick="appendCalc('*')">×</button>
+
+            <button onclick="appendCalc('1')">1</button>
+            <button onclick="appendCalc('2')">2</button>
+            <button onclick="appendCalc('3')">3</button>
+            <button onclick="appendCalc('-')">−</button>
+
+            <button onclick="appendCalc('0')">0</button>
+            <button onclick="appendCalc('.')">.</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="appendCalc('+')">+</button>
+
+            <button onclick="clearCalc()" style="grid-column: span 4;">C</button>
+        </div>
+    </div>
+</section>
+
+<section class="contact" id="contact">
+    <h2 class="section-title">Formulaire de contact</h2>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Nom">
+        <div class="error" id="nameError"></div>
+
+        <input type="email" id="email" placeholder="Email">
+        <div class="error" id="emailError"></div>
+
+        <textarea id="message" rows="5" placeholder="Message"></textarea>
+        <div class="error" id="messageError"></div>
+
+        <button type="submit">Envoyer</button>
+        <div class="success" id="successMessage"></div>
+    </form>
+</section>
+
+<footer>
+    <p>© 2026 NORTH - Tous droits réservés</p>
+</footer>
+
+<script>
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("light-mode");
+}
+
+let currentSlide = 0;
+const slides = document.getElementById("slides");
+const totalSlides = slides.children.length;
+
+function showSlide() {
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
+
+setInterval(() => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide();
+}, 3000);
+
+function addTask() {
+    const taskInput = document.getElementById("taskInput");
+    const taskText = taskInput.value.trim();
+
+    if (taskText === "") return;
+
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${taskText}</span><button class="delete-btn" onclick="this.parentElement.remove()">Supprimer</button>`;
+    document.getElementById("taskList").appendChild(li);
+    taskInput.value = "";
+}
+
+function appendCalc(value) {
+    document.getElementById("calcDisplay").value += value;
+}
+
+function clearCalc() {
+    document.getElementById("calcDisplay").value = "";
+}
+
+function calculateResult() {
+    try {
+        document.getElementById("calcDisplay").value = eval(document.getElementById("calcDisplay").value);
+    } catch {
+        document.getElementById("calcDisplay").value = "Erreur";
+    }
+}
+
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    document.getElementById("nameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("messageError").textContent = "";
+    document.getElementById("successMessage").textContent = "";
+
+    if (name.length < 2) {
+        document.getElementById("nameError").textContent = "Le nom doit contenir au moins 2 caractères.";
+        valid = false;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+        document.getElementById("emailError").textContent = "Entre un email valide.";
+        valid = false;
+    }
+
+    if (message.length < 10) {
+        document.getElementById("messageError").textContent = "Le message doit contenir au moins 10 caractères.";
+        valid = false;
+    }
+
+    if (valid) {
+        document.getElementById("successMessage").textContent = "Formulaire envoyé avec succès.";
+        document.getElementById("contactForm").reset();
+    }
+});
+</script>
+
+</body>
+</html>
